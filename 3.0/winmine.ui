@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Winmine</class>
+ <widget class="QMainWindow" name="Winmine">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>676</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="sizeIncrement">
+   <size>
+    <width>5</width>
+    <height>5</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>11</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Winmine</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>380</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDemanding">
+    <property name="title">
+     <string>Level</string>
+    </property>
+    <addaction name="Easy"/>
+    <addaction name="Middle"/>
+    <addaction name="Hard"/>
+    <addaction name="Customize"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="Instruction"/>
+   </widget>
+   <widget class="QMenu" name="menuRanking_List">
+    <property name="title">
+     <string>Ranking List</string>
+    </property>
+    <addaction name="View_Information"/>
+   </widget>
+   <addaction name="menuDemanding"/>
+   <addaction name="menuAbout"/>
+   <addaction name="menuRanking_List"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="Easy">
+   <property name="text">
+    <string>Easy</string>
+   </property>
+  </action>
+  <action name="Middle">
+   <property name="text">
+    <string>Middle</string>
+   </property>
+  </action>
+  <action name="Hard">
+   <property name="text">
+    <string>Hard</string>
+   </property>
+  </action>
+  <action name="Customize">
+   <property name="text">
+    <string>Customize</string>
+   </property>
+  </action>
+  <action name="Instruction">
+   <property name="text">
+    <string> Instruction</string>
+   </property>
+  </action>
+  <action name="View_Information">
+   <property name="text">
+    <string>View Information</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

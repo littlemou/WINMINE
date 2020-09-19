@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/1.png</file>
+        <file>images/2.png</file>
+        <file>images/3.png</file>
+        <file>images/4.png</file>
+        <file>images/5.png</file>
+        <file>images/6.png</file>
+        <file>images/7.png</file>
+        <file>images/8.png</file>
+        <file>images/blank.png</file>
+        <file>images/explode.png</file>
+        <file>images/flag.png</file>
+        <file>images/initial.png</file>
+        <file>images/question.png</file>
+        <file>images/title.bmp</file>
+        <file>images/unknow.png</file>
+        <file>images/time_digita2.png</file>
+        <file>images/time_digita3.png</file>
+        <file>images/time_digita6.png</file>
+        <file>images/time_digita7.png</file>
+        <file>images/time_digital0.png</file>
+        <file>images/time_digital1.png</file>
+        <file>images/time_digita4.png</file>
+        <file>images/time_digita8.png</file>
+        <file>images/time_digita5.png</file>
+        <file>images/time_digita9.png</file>
+        <file>images/again.png</file>
+    </qresource>
+</RCC>
