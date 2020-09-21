@@ -25,6 +25,7 @@ int win();
 //row:列
 //col:行
 //height和row连，length和col连
+
 Winmine::Winmine(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Winmine)
@@ -42,10 +43,12 @@ Winmine::Winmine(QWidget *parent) :
 
     connect(ui->save,&QAction::triggered,this,&Winmine::write_setting);
     connect(ui->last_game,&QAction::triggered,this,&Winmine::read_setting);
+    connect(ui->Clear,&QAction::triggered,this,&Winmine::clearfile);
 
     //新信号
     void(dialog::*okclicked)(QString s)=&dialog::slotname;
     connect(&w3,okclicked,this,&Winmine::readplayername);
+
 
     runtime = new QTimer(this);
     connect(runtime,SIGNAL(timeout()),this,SLOT(second()));
@@ -138,10 +141,6 @@ void Winmine::mousePressEvent(QMouseEvent *event)
             }
             mine->p[click_y][click_x]=mine->p[click_y][click_x]+50;
             flag_number--;//控制插旗数量
-            if(mine->p[click_y][click_x]==149)//《《《《《《《《《《
-            {
-                boom_number--;
-            }
             if(boom_number==0)
             {
                 QMessageBox::warning(this,"YOU WIN","YOU WIN");
@@ -250,6 +249,10 @@ void Winmine::paintEvent(QPaintEvent *event)
                     case 7: painter.drawPixmap(j*block_length,i*block_height+title_height,blk_7,0,0,block_length,block_height);break;
                     case 8: painter.drawPixmap(j*block_length,i*block_height+title_height,blk_8,0,0,block_length,block_height);break;
                    }
+                }
+                else if(mine->p[i][j]==199)
+                {
+                    painter.drawPixmap(j*block_length,i*block_height+title_height,explode,0,0,block_length,block_height);
                 }
              }
          }
@@ -559,6 +562,7 @@ void Winmine::list_show()
 {
     w2.setWindowTitle("排行榜");
     w2.move(0,0);
+    w2.show();
 }
 
 void Winmine::setcustomize(int row,int col,int boomnum)
@@ -793,14 +797,14 @@ void Winmine::read_setting()
                     continue;
                 }
                 else
-                if(line[j]=='g')//问号雷
+                if(line[j]=='g')//点击的地雷
                 {
                     mine->p[r][c]=199;
                     c++;
                     continue;
                 }
                 else
-                if(line[j]=='c')
+                if(line[j]=='c')//问号雷
                 {
                     mine->p[r][c]=299;
                     c++;
@@ -983,6 +987,13 @@ void Winmine::read_setting()
     }
     file.close();
     update();
+}
+
+void Winmine::clearfile()
+{
+    QFile file("load.txt");
+    file.open(QFile::WriteOnly | QFile::Truncate);
+    file.close();
 }
 
 Winmine::~Winmine()

@@ -63,6 +63,7 @@ private slots:
     void dialogshow();
     void second();
     void readplayername(QString s);
+    void clearfile();
 
 protected:
 

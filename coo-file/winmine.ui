@@ -38,6 +38,7 @@
     </property>
     <addaction name="save"/>
     <addaction name="last_game"/>
+    <addaction name="Clear"/>
    </widget>
    <widget class="QMenu" name="menuRanking_List">
     <property name="title">
@@ -83,6 +84,11 @@
   <action name="View_Information">
    <property name="text">
     <string>View Information</string>
+   </property>
+  </action>
+  <action name="Clear">
+   <property name="text">
+    <string>Clear</string>
    </property>
   </action>
  </widget>
