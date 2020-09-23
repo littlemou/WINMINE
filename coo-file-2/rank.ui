@@ -14,82 +14,184 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="gridLayoutWidget">
+   <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>391</width>
-      <height>261</height>
+      <x>-11</x>
+      <y>9</y>
+      <width>500</width>
+      <height>550</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="name1"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLineEdit" name="time1"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="name2"/>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLineEdit" name="time2"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="name3"/>
-     </item>
-     <item row="2" column="2">
-      <widget class="QLineEdit" name="time3"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="name4"/>
-     </item>
-     <item row="3" column="2">
-      <widget class="QLineEdit" name="time4"/>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="name5"/>
-     </item>
-     <item row="4" column="2">
-      <widget class="QLineEdit" name="time5"/>
-     </item>
-    </layout>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/images/rankbackground_WPS图片.jpg);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QWidget" name="gridLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>100</y>
+       <width>451</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="4" column="2">
+       <widget class="QLineEdit" name="time4"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>第一名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>第四名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="name1"/>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLineEdit" name="time1"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>第二名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>第三名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLineEdit" name="time2"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="name2"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="name4"/>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLineEdit" name="time3"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>第五名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="name3"/>
+      </item>
+      <item row="6" column="2">
+       <widget class="QLineEdit" name="time6"/>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="name5"/>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLineEdit" name="time5"/>
+      </item>
+      <item row="7" column="2">
+       <widget class="QLineEdit" name="time7"/>
+      </item>
+      <item row="8" column="1">
+       <widget class="QLineEdit" name="name8"/>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="name6"/>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>第七名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QLineEdit" name="time8"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>第八名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>第六名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="name7"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_10">
+        <property name="styleSheet">
+         <string notr="true">font: 16pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>用时</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_9">
+        <property name="styleSheet">
+         <string notr="true">font: 16pt &quot;楷体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>姓名</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

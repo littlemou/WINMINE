@@ -25,6 +25,7 @@ public:
     void px();
     void writelist();
     void readlist();
+    void listclear();
 
 
     ~rank();

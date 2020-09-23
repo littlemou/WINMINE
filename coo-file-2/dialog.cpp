@@ -6,6 +6,8 @@ dialog::dialog(QWidget *parent) :
     ui(new Ui::dialog)
 {
     ui->setupUi(this);
+    setFixedSize(530,290);
+    setWindowTitle("Congratulation!");
     connect(ui->cancel,&QPushButton::clicked,this,&dialog::cancelclicked);
     connect(ui->ok,&QPushButton::clicked,this,&dialog::okclicked);
 }

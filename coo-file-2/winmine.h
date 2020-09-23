@@ -65,12 +65,13 @@ private slots:
     void readplayername(QString s);
     void clearfile();
     void clearlist();
+    void showblock(int x,int y);
+    void paintboom(QPainter *painter);
 
 protected:
 
 };
-void showblock(int x,int y);
-void paintboom(QPainter *painter);
+
 
 
 #endif // WINMINE_H

@@ -7,6 +7,7 @@ customize_window::customize_window(QWidget *parent) :
     ui(new Ui::customize_window)
 {
     ui->setupUi(this);
+    setFixedSize(300,350);
     connect(ui->ok,&QPushButton::clicked,this,&customize_window::senddata);
 }
 
@@ -25,12 +26,12 @@ void customize_window::senddata()
         QMessageBox::warning(this,"wrong","超出范围");
         return;
     }
-    if(str1.toInt()<2||str1.toInt()>54)
+    if(str1.toInt()<2||str1.toInt()>24)
     {
         QMessageBox::warning(this,"wrong","超出范围");
         return;
     }
-    if(str2.toInt()<2||str2.toInt()>24)
+    if(str2.toInt()<2||str2.toInt()>54)
     {
         QMessageBox::warning(this,"wrong","超出范围");
         return;

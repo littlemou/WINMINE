@@ -32,7 +32,7 @@
        </font>
       </property>
       <property name="text">
-       <string>列数（2-24）</string>
+       <string>行数（2-24）</string>
       </property>
      </widget>
     </item>
@@ -50,7 +50,7 @@
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="lineEdit2">
+     <widget class="QLineEdit" name="lineEdit1">
       <property name="minimumSize">
        <size>
         <width>93</width>
@@ -74,7 +74,7 @@
        </font>
       </property>
       <property name="text">
-       <string>行数（2-54）</string>
+       <string>列数（2-54）</string>
       </property>
      </widget>
     </item>
@@ -102,7 +102,7 @@
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit1">
+     <widget class="QLineEdit" name="lineEdit2">
       <property name="minimumSize">
        <size>
         <width>0</width>
@@ -113,6 +113,27 @@
     </item>
    </layout>
   </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>8</x>
+     <y>18</y>
+     <width>401</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/new/prefix1/images/back3.jpg);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>layoutWidget</zorder>
  </widget>
  <resources/>
  <connections/>

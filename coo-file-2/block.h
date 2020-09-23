@@ -13,6 +13,8 @@ public:
     int **p;
     int getrow();
     int getcol();
+//    void setrow();
+//    void setcol();
 
     int getflagnum();
     int gettimenum();
@@ -21,6 +23,7 @@ public:
     void subflagnum();
     void addflagnum();
     void addtimeNum();
+    void settimenum(int timex);
 
     void subboomnum();
     void addboomnum();

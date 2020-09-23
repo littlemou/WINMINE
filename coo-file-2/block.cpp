@@ -1,4 +1,4 @@
-#include "block.h"
+ #include "block.h"
 
 block::block(int row,int col,int boomnum)
 {
@@ -73,38 +73,52 @@ int block::getrow()
 {
     return row;
 }
+
 int block::getcol()
 {
     return col;
 }
+
 int block::getflagnum()
 {
     return flagnum;
 }
+
 int block::gettimenum()
 {
     return timenum;
 }
+
+void block::settimenum(int timex){
+    timenum=timex;
+}
+
 int block::getboomnum()
 {
     return boomnum;
 }
+
 void block::subflagnum()
 {
     flagnum=flagnum-1;
 }
+
 void block::addflagnum()
 {
     flagnum=flagnum+1;
 }
+
 void block::addtimeNum()
 {
     timenum=timenum+1;
 }
+
 void block::subboomnum()
 {
     boomnum=boomnum-1;
-}void block::addboomnum()
+}
+
+void block::addboomnum()
 {
     boomnum=boomnum+1;
 }

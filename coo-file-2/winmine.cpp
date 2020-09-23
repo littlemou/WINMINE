@@ -8,7 +8,7 @@
 int initial_row=9;
 int initial_col=9;
 int initial_boomnum=10;
-int click_x,click_y,timeend=1;
+int click_x,click_y,timeend=1,timenum;
 
 QPainter *paintmywindow;
 block *mine=new block(initial_row,initial_col,initial_boomnum);
@@ -22,15 +22,15 @@ int win();
 //插旗+50，拔旗-50
 //遍历显示+100
 //问号+200
-//row:列
-//col:行
-//height和row连，length和col连
+//row:行
+//col:列
 
 Winmine::Winmine(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Winmine)
 {
     ui->setupUi(this);
+
     connect(ui->Easy,&QAction::triggered,this,&Winmine::easy);
     connect(ui->Middle,&QAction::triggered,this,&Winmine::middle);
     connect(ui->Hard,&QAction::triggered,this,&Winmine::hard);
@@ -91,8 +91,10 @@ void Winmine::mousePressEvent(QMouseEvent *event)
     click_y=(click_y-title_height)/block_height;
     if(event->buttons()==(Qt::LeftButton))
     {
-        if(timeend==1)
-           runtime->start(1000);
+        if(timeend==1){
+            runtime->start(1000);timeend=0;
+        }
+
         if(mine->p[click_y][click_x]==99)
         {
             paint_flag="boom";
@@ -155,7 +157,7 @@ void Winmine::mousePressEvent(QMouseEvent *event)
             flag_number++;
         }
         else
-        if((mine->p[click_y][click_x]>=200&&mine->p[click_y][click_x]<210)||(mine->p[click_y][click_x]==299))//判断问号方块，去掉问号
+        if((mine->p[click_y][click_x]>=200&&mine->p[click_y][click_x]<210)||(mine->p[click_y][click_x]==299))//判断问好方块，去掉问号
         {
             mine->p[click_y][click_x]=mine->p[click_y][click_x]-200;
             paint_flag=="flag";
@@ -179,6 +181,7 @@ void Winmine::paintEvent(QPaintEvent *event)
     paintmywindow=&painter;
     painttitle(paintmywindow);
     QPixmap initial("://images/initial.png");
+
     if(paint_flag=="none")//画出初始界面
     {
         for(int i=0;i<mine->getcol()*block_length;i+=block_length)
@@ -275,7 +278,7 @@ void Winmine::paintEvent(QPaintEvent *event)
     }
 }
 
-void showblock(int x, int y)
+void Winmine::showblock(int x, int y)
 {
     for(int row=x-1;row<=x+1;row++)
     {
@@ -380,7 +383,7 @@ void Winmine::painttitle(QPainter *painter)
     case 9:painter->drawPixmap(70,title_begin+title_height/3,digital9,0,0,block_length,block_height);break;
     }
     //显示时间
-    int timenum = mine->gettimenum();
+    timenum = mine->gettimenum();
     length=mine->getcol()*35;
     switch  (timenum/100)
     {
@@ -450,7 +453,7 @@ void Winmine::second()
     mine->addtimeNum();
 }
 
-void paintboom(QPainter *painter)
+void Winmine::paintboom(QPainter *painter)
 {
     QPixmap initial("://images/initial.png");
     QPixmap explode("://images/explode.png");
@@ -578,13 +581,12 @@ void Winmine::setcustomize(int row,int col,int boomnum)
 
 void Winmine::write_setting()
 {
-    qDebug()<<"写入";
     QFile file("load.txt");
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream write(&file);
-    char a[100000];
+//    char a[100000];
     int k=0;
-    write<<mine->getrow()<<'/'<<mine->getcol()<<'/'<<mine->getboomnum()<<'/'<<end<<'/'<<boom_number<<'/'<<paint_flag<<'/'<<flag_number<<'/';
+    write<<mine->getrow()<<'/'<<mine->getcol()<<'/'<<mine->getboomnum()<<'/'<<end<<'/'<<boom_number<<'/'<<paint_flag<<'/'<<flag_number<<'/'<<timenum<<'/'<<timeend<<'/';
     for(int i=0;i<mine->getcol();i++)
     {
         for(int j=0;j<mine->getrow();j++)
@@ -592,91 +594,7 @@ void Winmine::write_setting()
             write<<mine->p[i][j]<<'=';
         }
         write<<'!';
-    }/*
-    for(int i=0;i<mine->getcol();i++)
-    {
-        for(int j=0;j<mine->getrow();j++)
-        {
-            if(mine->p[i][j]<10)//未显示数字
-            {
-                char b=mine->p[i][j]+'0';
-                write<<b<<'=';
-                continue;
-            }
-            if(mine->p[i][j]==99)//未操作地雷
-            {
-                write<<'a'<<'=';
-                continue;
-            }
-            if(mine->p[i][j]==149)//插旗地雷
-            {
-                write<<'b'<<'=';
-                continue;
-            }
-            if(mine->p[i][j]==199)//已显示地雷
-            {
-                write<<'g'<<'=';
-                continue;
-            }
-            if(mine->p[i][j]==299)//问号地雷
-            {
-                write<<'c'<<'=';
-                continue;
-            }
-            if(mine->p[i][j]>=200&&mine->p[i][j]<210)//问号数字
-            {
-                switch (mine->p[i][j])
-                {
-                    case 200:write<<'d'<<'0'<<'=';break;
-                    case 201:write<<'d'<<'1'<<'=';break;
-                    case 202:write<<'d'<<'2'<<'=';break;
-                    case 203:write<<'d'<<'3'<<'=';break;
-                    case 204:write<<'d'<<'4'<<'=';break;
-                    case 205:write<<'d'<<'5'<<'=';break;
-                    case 206:write<<'d'<<'6'<<'=';break;
-                    case 207:write<<'d'<<'7'<<'=';break;
-                    case 208:write<<'d'<<'8'<<'=';break;
-                    default:break;
-                }
-                continue;
-            }
-            if(mine->p[i][j]>=50&&mine->p[i][j]<60)//插旗数字
-            {
-                switch (mine->p[i][j])
-                {
-                    case 50:write<<'e'<<'0'<<'=';break;
-                    case 51:write<<'e'<<'1'<<'=';break;
-                    case 52:write<<'e'<<'2'<<'=';break;
-                    case 53:write<<'e'<<'3'<<'=';break;
-                    case 54:write<<'e'<<'4'<<'=';break;
-                    case 55:write<<'e'<<'5'<<'=';break;
-                    case 56:write<<'e'<<'6'<<'=';break;
-                    case 57:write<<'e'<<'7'<<'=';break;
-                    case 58:write<<'e'<<'8'<<'=';break;
-                    default:break;
-                }
-                continue;
-            }
-            if(mine->p[i][j]>=100&&mine->p[i][j]<110)//已显示的数字
-            {
-                switch (mine->p[i][j])
-                {
-                    case 100:write<<'f'<<'0'<<'=';break;
-                    case 101:write<<'f'<<'1'<<'=';break;
-                    case 102:write<<'f'<<'2'<<'=';break;
-                    case 103:write<<'f'<<'3'<<'=';break;
-                    case 104:write<<'f'<<'4'<<'=';break;
-                    case 105:write<<'f'<<'5'<<'=';break;
-                    case 106:write<<'f'<<'6'<<'=';break;
-                    case 107:write<<'f'<<'7'<<'=';break;
-                    case 108:write<<'f'<<'8'<<'=';break;
-                    default:break;
-                }
-                continue;
-            }
-        }
-        write<<'!';
-    }*/
+    }
     file.close();
 
 }
@@ -692,7 +610,6 @@ void Winmine::read_setting()
         return;
     }
     QString line=read.readLine();
-    qDebug()<<line;
     QString row;
     QString col;
     QString boom;
@@ -700,7 +617,9 @@ void Winmine::read_setting()
     QString fn;
     QString boomn;
     QString flag;
-    for(int i=0;;i++)//提取前几个初始值
+    QString timenum1;
+    QString timeend1;
+    for(int i=0;;i++)//提取前8个初始值
     {
         if(line[i]=='/')
         {
@@ -729,7 +648,22 @@ void Winmine::read_setting()
                                             for(int u=k+1;;u++)
                                             {
                                                 if(line[u]=='/')
-                                                {
+                                                {   for(int yy=u+1;;yy++)
+                                                    {
+                                                        if(line[yy]=='/')
+                                                        {
+                                                            for(int xx=yy+1;;xx++)
+                                                            {
+                                                                if(line[xx]=='/')
+                                                                {
+                                                                    break;
+                                                                }
+                                                                timeend1.push_back(line[xx]);
+                                                            }
+                                                            break;
+                                                        }
+                                                        timenum1.push_back(line[yy]);
+                                                    }
                                                     break;
                                                 }
                                                 fn.push_back(line[u]);
@@ -764,10 +698,13 @@ void Winmine::read_setting()
     boom_number=boomn.toInt();
     paint_flag=flag;
     flag_number=fn.toInt();
-
+    timenum=timenum1.toInt();
+    timeend=timeend1.toInt();
+    if(end!=1)timeend=1;
+    mine->settimenum(timenum);
     for(int i=0;i<line.length();i++)
     {
-        if(k<7)
+        if(k<9)
         {
             if(line[i]=='/')
                 k++;
@@ -776,236 +713,37 @@ void Winmine::read_setting()
         else
         {
             int r=0,c=0;
-            for(int j=i;j<line.length();j++)
-            {
-                if(line[j]=='=')
-                    continue;
-                else
-                if(line[j]=='!')
-                {
-                    c=0;
-                    r++;
-                    continue;
-                    if(r==row1)
-                    {
+                        for(int j=i;j<line.length();j++)
+                        {
+                            if(line[j]=='=')
+                                continue;
+                            else
+                            if(line[j]=='!')
+                            {
+                                c=0;
+                                r++;
+                                continue;
+                                if(r==row1)
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                QString temp;
+                                for(int k=j;line[j]!='='&&line[j]!='!';j++)
+                                {
+                                    temp.push_back(line[j]);
+                                }
+                                int temp1=temp.toInt();
+                                mine->p[r][c]=temp1;
+                                c++;
+                                continue;
+                            }
+                        }
                         break;
-                    }
-                }
-                else
-                {
-                    QString temp;
-                    for(int k=j;line[j]!='='&&line[j]!='!';j++)
-                    {
-                        temp.push_back(line[j]);
-                    }
-                    int temp1=temp.toInt();
-                    mine->p[r][c]=temp1;
-                    c++;
-                    continue;
-                }/*
-                if(line[j]=='a')//未操作地雷
-                {
-                    mine->p[r][c]=99;
-                    c++;
-                    continue;
-                }
-                else
-                if(line[j]=='b')//插旗雷
-                {
-                    mine->p[r][c]=149;
-                    c++;
-                    continue;
-                }
-                else
-                if(line[j]=='g')//点击的地雷
-                {
-                    mine->p[r][c]=199;
-                    c++;
-                    continue;
-                }
-                else
-                if(line[j]=='c')//问号雷
-                {
-                    mine->p[r][c]=299;
-                    c++;
-                    continue;
-                }
-                else
-                if(line[j]=='d')//问号数
-                {
-                    j++;
-                    if(line[j]=='0')
-                    {
-                        mine->p[r][c]=200;
-                    }
-                    else if(line[j]=='1')
-                    {
-                        mine->p[r][c]=201;
-                    }
-                    else if(line[j]=='2')
-                    {
-                        mine->p[r][c]=202;
-                    }
-                    else if(line[j]=='3')
-                    {
-                        mine->p[r][c]=203;
-                    }
-                    else if(line[j]=='4')
-                    {
-                        mine->p[r][c]=204;
-                    }
-                    else if(line[j]=='5')
-                    {
-                        mine->p[r][c]=205;
-                    }
-                    else if(line[j]=='6')
-                    {
-                        mine->p[r][c]=206;
-                    }
-                    else if(line[j]=='7')
-                    {
-                        mine->p[r][c]=207;
-                    }
-                    else if(line[j]=='8')
-                    {
-                        mine->p[r][c]=208;
-                    }
-                    c++;
-                    continue;
-                }
-                else
-                if(line[j]=='e')//插旗数
-                {
-                    j++;
-                    if(line[j]=='0')
-                    {
-                        mine->p[r][c]=50;
-                    }
-                    else if(line[j]=='1')
-                    {
-                        mine->p[r][c]=51;
-                    }
-                    else if(line[j]=='2')
-                    {
-                        mine->p[r][c]=52;
-                    }
-                    else if(line[j]=='3')
-                    {
-                        mine->p[r][c]=53;
-                    }
-                    else if(line[j]=='4')
-                    {
-                        mine->p[r][c]=54;
-                    }
-                    else if(line[j]=='5')
-                    {
-                        mine->p[r][c]=55;
-                    }
-                    else if(line[j]=='6')
-                    {
-                        mine->p[r][c]=56;
-                    }
-                    else if(line[j]=='7')
-                    {
-                        mine->p[r][c]=57;
-                    }
-                    else if(line[j]=='8')
-                    {
-                        mine->p[r][c]=58;
-                    }
-                    c++;
-                    continue;
-                }
-                else
-                if(line[j]=='f')//显示的数
-                {
-                    j++;
-                    if(line[j]=='0')
-                    {
-                        mine->p[r][c]=100;
-                    }
-                    else if(line[j]=='1')
-                    {
-                        mine->p[r][c]=101;
-                    }
-                    else if(line[j]=='2')
-                    {
-                        mine->p[r][c]=102;
-                    }
-                    else if(line[j]=='3')
-                    {
-                        mine->p[r][c]=103;
-                    }
-                    else if(line[j]=='4')
-                    {
-                        mine->p[r][c]=104;
-                    }
-                    else if(line[j]=='5')
-                    {
-                        mine->p[r][c]=105;
-                    }
-                    else if(line[j]=='6')
-                    {
-                        mine->p[r][c]=106;
-                    }
-                    else if(line[j]=='7')
-                    {
-                        mine->p[r][c]=107;
-                    }
-                    else if(line[j]=='8')
-                    {
-                        mine->p[r][c]=108;
-                    }
-                    c++;
-
-                    continue;
-                }
-                else//未显示数字
-                {
-                    if(line[j]=='0')
-                    {
-                        mine->p[r][c]=0;
-                    }
-                    else if(line[j]=='1')
-                    {
-                        mine->p[r][c]=1;
-                    }
-                    else if(line[j]=='2')
-                    {
-                        mine->p[r][c]=2;
-                    }
-                    else if(line[j]=='3')
-                    {
-                        mine->p[r][c]=3;
-                    }
-                    else if(line[j]=='4')
-                    {
-                        mine->p[r][c]=4;
-                    }
-                    else if(line[j]=='5')
-                    {
-                        mine->p[r][c]=5;
-                    }
-                    else if(line[j]=='6')
-                    {
-                        mine->p[r][c]=6;
-                    }
-                    else if(line[j]=='7')
-                    {
-                        mine->p[r][c]=7;
-                    }
-                    else if(line[j]=='8')
-                    {
-                        mine->p[r][c]=8;
-                    }
-                    c++;
-                    continue;
-                }*/
-            }
-            break;
         }
     }
-    qDebug()<<line;
     file.close();
     update();
 }
@@ -1019,9 +757,7 @@ void Winmine::clearfile()
 
 void Winmine::clearlist()
 {
-    QFile file("ranklist.txt");
-    file.open(QFile::WriteOnly | QFile::Truncate);
-    file.close();
+   w2.listclear();
 }
 
 Winmine::~Winmine()

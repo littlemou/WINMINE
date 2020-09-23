@@ -8,53 +8,44 @@ rank::rank(QWidget *parent) :
     ui(new Ui::rank)
 {
     ui->setupUi(this);
+    setFixedSize(500,600);
+    move(800,400);
     readlist();
     px();
 }
-void rank::setplayername(QString s)
-{
-    if(pn<8)
-    {
+void rank::setplayername(QString s){
+    if(pn<8){
         blbl[pn].playername=s;
         pn++;
     }
-    else
-    {
+    else {
         blbl[8].playername=s;pn=9;
     }
 
 }
-void rank::settime(int sj)
-{
-    if(tn<8)
-    {
+void rank::settime(int sj){
+    if(tn<8){
         blbl[tn].time=sj;
         tn++;
     }
-    else
-    {
+    else {
         blbl[8].time=sj;tn=9;
     }
 
 }
-void rank::px()
-{
+void rank::px(){
         num=tn-1;
-     for(int i=0;i<=num-1;i++)
-     {
-        for(int j=i+1;j<=num;j++)
-        {
+     for(int i=0;i<=num-1;i++){
+        for(int j=i+1;j<=num;j++){
             QString temp;int tem;
-            if(blbl[j].time<blbl[i].time)
-            {
+            if(blbl[j].time<blbl[i].time){
                 temp=blbl[j].playername;blbl[j].playername=blbl[i].playername;blbl[i].playername=temp;
                 tem=blbl[j].time;blbl[j].time=blbl[i].time;blbl[i].time=tem;
             }
         }
     }
      QString s;
-     switch (num)
-     {
+     switch (num) {
          case 8:
          case 7:ui->name8->setText(blbl[7].playername);
             s=QString::number(blbl[7].time,10);
@@ -85,31 +76,24 @@ void rank::px()
      }
 }
 void rank::writelist(){
-    qDebug()<<"鍐欏叆";
-    QFile file("ranklist.txt");
+    QFile file("new.txt");
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream write(&file);
-
-    char a[100000];
-    int k=0;
     write<<pn<<'/'<<tn<<'/'<<num<<'/';
-    for(int i =0;i<=num;i++)
-    {
+    for(int i =0;i<=num;i++){
         write<<'^'<<blbl[i].playername<<'|'<<blbl[i].time<<'!';
     }
     file.close();
-
-
 }
-void rank::readlist(){
-
-    QFile file("ranklist.txt");
+void rank::readlist()
+{
+    QFile file("new.txt");
     file.open(QIODevice::ReadOnly|QIODevice::Text);
     QTextStream read(&file);
     QString line =read.readLine();
     QString pn1;
     QString tn1;
-    QString num1;qDebug()<<"杩涘叆";
+    QString num1;
     for(int i =0;;i++)
     {
         if(line[i]=='/')
@@ -133,38 +117,26 @@ void rank::readlist(){
         pn1.push_back(line[i]);
     }
     pn=pn1.toInt();tn=tn1.toInt();num=num1.toInt();
-    qDebug()<<pn<<" "<<tn<<" "<<num<<" ";
-    qDebug()<<line;
     int k=0,namec=0,timec=0;QString zh;
-    for(int i=0;i<line.length();i++)
-    {
-        if(line[i]=='^')
-        {
-            namec=1;timec=0;continue;
-        }
-        if(line[i]=='|')
-        {
-            namec=0;timec=1;continue;
-        }
-        if(line[i]=='!')
-        {
-            namec=0;
-            timec=0;blbl[k].time=zh.toInt();
-            zh="";
-            k++;
-            continue;
-        }
-        if(namec)
-        {
-            blbl[k].playername+=line[i];
-        }
-        if(timec)
-        {
-            zh+=line[i];
-        }
+    for(int i=0;i<line.length();i++){
+        if(line[i]=='^'){namec=1;timec=0;continue;}
+        if(line[i]=='|'){namec=0;timec=1;continue;}
+        if(line[i]=='!'){namec=0;timec=0;blbl[k].time=zh.toInt();zh="";k++;continue;}
+        if(namec){blbl[k].playername+=line[i];}
+        if(timec){zh+=line[i];}
     }
     file.close();
     update();
+}
+void rank::listclear(){
+    QFile file("new.txt");
+        file.open(QFile::WriteOnly|QFile::Truncate);
+        file.close();
+        pn=0;tn=0;num=0;
+        ui->name1->setText("");ui->name2->setText("");ui->name3->setText("");ui->name4->setText("");
+        ui->name5->setText("");ui->name6->setText("");ui->name7->setText("");ui->name8->setText("");
+        ui->time1->setText("");ui->time2->setText("");ui->time3->setText("");ui->time4->setText("");
+        ui->time5->setText("");ui->time6->setText("");ui->time7->setText("");ui->time8->setText("");
 }
 rank::~rank()
 {
